@@ -57,7 +57,7 @@ class User():
         
     def update(self):
         db.update(table='users',values={
-            'last_login':self.last_login,
+            'first_login':self.first_login,
             'banned':self.banned,
             'admin':self.admin
         },params={'ip':self.ip})

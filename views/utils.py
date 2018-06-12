@@ -13,12 +13,14 @@ def session_check(request):
             id=res.id
         else:
             return models.User(ip=ip)        
-    res = db.select(table='users',fields=['ip','admin','banned'],params={'id':id})
+    res = models.User(id=id)
+    print(vars(res))
     if res.ip!=ip:
-        db.update(table='users',values={'ip':ip},params={'id':id})
+        res.ip = ip
+        res.update()
     if res.banned:
         return
-    return models.User(id=id)
+    return res
 
 
 def restrict_check(request,board):
