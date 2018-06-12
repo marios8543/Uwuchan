@@ -1,0 +1,19 @@
+{
+    "______DATABASE CONFIG______":"",
+    "db_host":"127.0.0.1",
+    "db_user":"root",
+    "db_pass":"",
+    "db_database":"uwuchan",
+    "______SITE CONFIG______":"",
+    "site_name":"Uwuchan",
+    "cookie_name":"uwuchan_session",
+    "max_subject_length":"50",
+    "max_comment_length":"4096",
+    "max_image_size":"5",
+    "allowed_exts":["jpg","jpeg","png","gif"],
+    "______REST-API CONFIG______":"",
+    "enable_api":"true",
+    "post_pull_limit":"30",
+    "______APP CONFIG______":"",
+    "dry_run":"false"
+}
