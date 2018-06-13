@@ -161,6 +161,7 @@ class ORM():
 		params_str = params_str[:-3]
 		sql = "DELETE {values} FROM {table} WHERE {params_str}".format(**{'values':values,'table':table,'params_str':params_str})
 		self.db.execute(sql)
+		self.conn.commit()
 		return 1
 
 		
