@@ -22,7 +22,7 @@ class Result():
 class ORM():
 	def __init__(self,host=None,username=None,password=None,database=None):
 		self.conn = mysql.connector.connect(host=host, port=3306,user=username, password=password, db=database)
-		self.db = self.conn.cursor()
+		self.db = self.conn.cursor(buffered=True)
 
 	def select(self,table='',fields='*',params='',norm=True):
 		if table=='':
@@ -152,9 +152,12 @@ class ORM():
 			return
 		if isinstance(values,list):
 			values = ",".join(values)
-		params_str = ""	
+		params_str = ""
 		for param in params:
-			params_str = params_str+" {key}={value} AND".format(**{'key':param,'value':params[param]})
+			if type(params[param])==str:
+				params_str = params_str+" {key}='{value}' AND".format(**{'key':param,'value':params[param]})
+			else:
+				params_str = params_str+" {key}={value} AND".format(**{'key':param,'value':params[param]})	
 		params_str = params_str[:-3]
 		sql = "DELETE {values} FROM {table} WHERE {params_str}".format(**{'values':values,'table':table,'params_str':params_str})
 		self.db.execute(sql)

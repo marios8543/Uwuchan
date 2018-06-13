@@ -14,7 +14,6 @@ def session_check(request):
         else:
             return models.User(ip=ip)        
     res = models.User(id=id)
-    print(vars(res))
     if res.ip!=ip:
         res.ip = ip
         res.update()
@@ -44,5 +43,5 @@ def response(code,message,user):
         status = 'success'
     else:
         status = 'error'   
-    return flask.make_response(flask.jsonify({'code':str(code),'status':status,'content':message,'user':user.__dict__}),code)
+    return flask.make_response(flask.jsonify({'code':code,'status':status,'content':message,'user':user.__dict__}),code)
     

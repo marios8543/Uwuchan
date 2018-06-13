@@ -197,7 +197,7 @@ class Post():
             })
             if not res:
                 return
-            self.id = id
+            self.id = int(id)
             self.author = User(id=res.author)
             self.board = board
             self.timestamp = res.timestamp
@@ -206,6 +206,10 @@ class Post():
             self.comment = res.text
             if res.image!='0':
                 self.image = Image(id=res.image.decode("utf-8"))
+
+    def delete(self):
+        db.delete(table='posts',params={'id':self.id,'board':self.board.name})
+        return 1        
 
     def dictate(self):
         if self.image:

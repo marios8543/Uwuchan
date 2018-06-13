@@ -129,3 +129,23 @@ def get_posts():
         return utils.response(400,'You can only pull {} posts per request'.format(cfg['post_pull_limit']),user)
     posts = models.get_posts(board,limit,dicc=True)
     return utils.response(200,posts,user)
+
+
+@app.route('/api/delete_post')
+def delete_post():
+    user = utils.session_check(request)
+    if not user or user.fng:
+        return utils.response(403,'You have been banned or have never visited before. If its the latter visit home first.',user)
+    board = models.Board(request.args.get('board'))
+    if not board.name:
+        return utils.response(404,'That board does not exist.',user)
+    post = models.Post(id=request.args.get('post'),board=board)
+    if not post.board:
+        return utils.response(404,'That post does not exist.',user)
+    if post.author.id == user.id:
+        if post.delete():
+            return utils.response(200,'Post deleted successfully',user)
+        else:
+            return utils.response(500,'Something went wrong. Try again later.',user)
+    else:
+        return utils.response(403,'You are not the author of this post.',user)
